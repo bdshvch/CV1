@@ -1,4 +1,12 @@
+import doctest
+
 def FirstStep(pr_k_x0, pr_k_x1):
+    """Return Avr for massives 1, 0
+    >>> FirstStep([0, 0], [1, 1])
+    [0.0, 1.0]
+    >>> FirstStep([0.5, 0.5], [0.5, 0.5])
+    [0.5, 0.5]
+    """
     pr_k = []
     sum0 = 0
     sum1 = 0
@@ -10,6 +18,10 @@ def FirstStep(pr_k_x0, pr_k_x1):
     return pr_k
 
 def SecondStep(pr_k_x0, pr_k_x1, NormTrainX, N, pi0, pi1, Size):
+    """
+    >>> SecondStep([0.6, 0.4], [0.4, 0.6], [[[1, 0], [0, 1]], [[1, 1], [0, 0]]], 2, [[0, 0], [0, 0]], [[0, 0], [0, 0]], 2)
+    ([[1.0, 0.4], [0.0, 0.6]], [[1.0, 0.6], [0.0, 0.4]])
+    """
     for i in range(Size):
         for j in range(Size):
             sum0 = 0
@@ -27,6 +39,10 @@ def SecondStep(pr_k_x0, pr_k_x1, NormTrainX, N, pi0, pi1, Size):
 
 
 def ThirdStep(pi0, pi1, N, pr_k, NormTrainX, Size):
+    """
+    >>> ThirdStep([[0.5, 0.5], [0.5, 0.5]], [[0.5, 0.5], [0.5, 0.5]], 1, [0.6, 0.4], [[[1, 0], [0, 0]]], 2)
+    ([0.6], [0.4])
+    """
     pr_k_x0 = []
     pr_k_x1 = []
     for m in range(N):
@@ -42,3 +58,7 @@ def ThirdStep(pi0, pi1, N, pr_k, NormTrainX, Size):
         pr_k_x0.append(1/(1 + (Multiplication)*(pr_k[1]/pr_k[0])))
         pr_k_x1.append(1 - (1/(1 + (Multiplication)*(pr_k[1]/pr_k[0]))))
     return pr_k_x0, pr_k_x1
+
+
+if __name__ == "__main__":
+    doctest.testmod()
