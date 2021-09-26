@@ -72,3 +72,72 @@ def Algorithm(pr_k_x0, pr_k_x1, pi0, pi1, NormTrainX):
     
 Algorithm(pr_k_x0, pr_k_x1, pi0, pi1, NormTrainX)
 
+#------------------------------------------------------------------------------#
+
+M = 100 #number of test imgs
+
+NormTestX = []
+for i in range(M):
+    NormTestX.append(norm(testX[i]))
+
+pr_k_test = []
+pr_k_x0_test = []
+pr_k_x1_test = []
+
+for i in range(M):
+    pr_k_x0_test.append(random.random())
+for i in range(M):
+    pr_k_x1_test.append(1 - pr_k_x0_test[i])
+
+pr_k_test = FirstStep(pr_k_x0_test, pr_k_x1_test)
+
+
+Prob0 = [] #Probability for each img to be in first claster
+Prob1 = [] #Probability for each img to be in second claster
+
+Prob0, Prob1 = ThirdStep(pi0, pi1, M, pr_k_test, NormTestX, Size)
+
+pyplot.imshow(pi0, cmap=pyplot.get_cmap('gray'))
+pyplot.show()
+pyplot.imshow(pi1, cmap=pyplot.get_cmap('gray'))
+pyplot.show()
+
+print("First claster: ")
+
+sum0 = 0
+for i in range(M):
+    if (Prob0[i] > 0.5):
+            sum0 = sum0 + 1
+sum1 = M - sum0
+
+fig, axes = pyplot.subplots(int(sum0/10) + 1, 10, figsize=(30, 30))
+j = 0
+k = 0
+for i in range(M):
+    if (Prob0[i] > 0.5):
+        if (j == 10):
+            j = 0
+            k = k + 1
+            axes[k, j].imshow(norm(testX[i]), cmap=pyplot.get_cmap('gray'))
+            j = j + 1
+        else:
+            axes[k, j].imshow(norm(testX[i]), cmap=pyplot.get_cmap('gray'))
+            j = j + 1
+pyplot.show()
+
+print("\nSecond claster: ")
+
+fig, axes = pyplot.subplots(int(sum1/10) + 1, 10, figsize=(30, 30))
+j = 0
+k = 0
+for i in range(M):
+    if (Prob0[i] < 0.5):
+        if (j == 10):
+            j = 0
+            k = k + 1
+            axes[k, j].imshow(norm(testX[i]), cmap=pyplot.get_cmap('gray'))
+            j = j + 1
+        else:
+            axes[k, j].imshow(norm(testX[i]), cmap=pyplot.get_cmap('gray'))
+            j = j + 1
+pyplot.show()
