@@ -49,9 +49,9 @@ def ThirdStep(pi0, pi1, N, pr_k, NormTrainX, Size):
         Multiplication = 1
         for i in range(Size):
             for j in range(Size):
-                if (pi0[i][j] == 0 and pi1[i][j] != 1):
+                if (pi0[i][j] == 0):
                     Multiplication = Multiplication * (((1 - pi1[i][j])/(1 - pi0[i][j]))**(1 - NormTrainX[m][i][j]))
-                if (pi0[i][j] == 1 and pi1[i][j] != 0):
+                if (pi0[i][j] == 1):
                     Multiplication = Multiplication * ((pi1[i][j]/pi0[i][j])**(NormTrainX[m][i][j]))
                 if ((pi0[i][j]) != 0 and (pi0[i][j]) != 1):
                     Multiplication = Multiplication * (((1 - pi1[i][j])/(1 - pi0[i][j]))**(1 - NormTrainX[m][i][j])) * ((pi1[i][j]/pi0[i][j])**(NormTrainX[m][i][j]))
